@@ -30,4 +30,30 @@ RSpec.describe 'Users API', type: :request do
 			end
 		end
  	end
+
+ 	describe 'Post /users' do
+ 		before do 
+ 			headers = {'Accept' => 'application
+ 						/vnd.task-manager.v1'}
+ 			post '/users', params: {user: user_params}
+ 		end
+ 	
+ 		context 'when users are valid' do
+ 			let(:user_params) {FactoryBot.attributes_for(:user)}
+ 		
+ 			it 'returns status code 201' do
+ 				expect(response).to have_http_status(201)
+ 			end
+
+ 			it 'returns json data ' do
+ 				user_response = JSON.parse(response.body)
+ 				expect(user_response['email'].to eql(user_params[:email]))
+ 			end
+ 		end
+
+ 		context 'when users are invalid' do
+
+ 		end
+ 	end
+
 end
